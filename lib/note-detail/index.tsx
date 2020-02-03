@@ -34,6 +34,7 @@ export class NoteDetail extends Component {
   };
 
   static defaultProps = {
+    detectLanguage: false,
     storeFocusEditor: noop,
     storeHasFocus: noop,
   };
