@@ -110,7 +110,9 @@ export const setLanguageDetection = languageDetectionEnabled => ({
 });
 
 export const toggleLanguageDetection = () => (dispatch, getState) => {
-  const { settings: { languageDetectionEnabled } } = getState();
+  const {
+    settings: { languageDetectionEnabled },
+  } = getState();
 
   dispatch(setLanguageDetection(!languageDetectionEnabled));
 };
