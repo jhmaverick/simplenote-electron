@@ -52,6 +52,7 @@ export type SetWPToken = Action<'setWPToken', { token: string }>;
  * Normal action types
  */
 export type FilterNotes = Action<'FILTER_NOTES', { notes: T.NoteEntity[] }>;
+export type Search = Action<'SEARCH', { searchQuery: string }>;
 export type SetAuth = Action<'AUTH_SET', { status: AuthState }>;
 export type SetUnsyncedNoteIds = Action<
   'SET_UNSYNCED_NOTE_IDS',
@@ -67,6 +68,7 @@ export type SelectNote = Action<'SELECT_NOTE', { note: T.NoteEntity }>;
 export type ActionType =
   | LegacyAction
   | FilterNotes
+  | Search
   | SelectNote
   | SetAccountName
   | SetAuth
@@ -174,7 +176,6 @@ type LegacyAction =
   | Action<'App.notesLoaded', { notes: T.NoteEntity[] }>
   | Action<'App.onNoteBeforeRemoteUpdate', { noteId: T.EntityId }>
   | Action<'App.preferencesLoaded', { analyticsEnabled: boolean }>
-  | Action<'App.search', { filter: string }>
   | Action<'App.selectNote', { note: T.NoteEntity; hasRemoteUpdate: boolean }>
   | Action<'App.selectTag', { tag: T.TagEntity }>
   | Action<'App.selectTagAndSElectFirstNote'>

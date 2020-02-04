@@ -17,7 +17,6 @@ export class NoteDetail extends Component {
 
   static propTypes = {
     dialogs: PropTypes.array.isRequired,
-    filter: PropTypes.string.isRequired,
     fontSize: PropTypes.number,
     onChangeContent: PropTypes.func.isRequired,
     syncNote: PropTypes.func.isRequired,
@@ -56,8 +55,6 @@ export class NoteDetail extends Component {
   }
 
   focusEditor = () => this.focusContentEditor && this.focusContentEditor();
-
-  saveEditorRef = ref => (this.editor = ref);
 
   isValidNote = note => note && note.id;
 
@@ -185,7 +182,6 @@ export class NoteDetail extends Component {
   render() {
     const {
       note,
-      filter,
       fontSize,
       previewingMarkdown,
       spellCheckEnabled,
@@ -222,13 +218,11 @@ export class NoteDetail extends Component {
                 style={divStyle}
               >
                 <NoteContentEditor
-                  ref={this.saveEditorRef}
                   spellCheckEnabled={spellCheckEnabled}
                   storeFocusEditor={this.storeFocusContentEditor}
                   storeHasFocus={this.storeEditorHasFocus}
                   noteId={get(note, 'id', null)}
                   content={content}
-                  filter={filter}
                   onChangeContent={this.saveNote}
                 />
               </div>
@@ -242,7 +236,6 @@ export class NoteDetail extends Component {
 
 const mapStateToProps = ({ appState: state, ui, settings }) => ({
   dialogs: state.dialogs,
-  filter: state.filter,
   note: state.revision || ui.note,
   shouldPrint: state.shouldPrint,
   showNoteInfo: state.showNoteInfo,

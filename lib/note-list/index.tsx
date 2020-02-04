@@ -192,7 +192,7 @@ const getRowHeight = rowHeightCache(computeRowHeight);
  * @see react-virtual/list
  *
  * @param {Object[]} notes list of filtered notes
- * @param {String} filter search filter
+ * @param {String} searchQuery search searchQuery
  * @param {String} noteDisplay list view style: comfy, condensed, expanded
  * @param {Number} selectedNoteId id of currently selected note
  * @param {Function} onSelectNote used to change the current note selection
@@ -202,7 +202,7 @@ const getRowHeight = rowHeightCache(computeRowHeight);
 const renderNote = (
   notes,
   {
-    filter,
+    searchQuery,
     noteDisplay,
     selectedNoteId,
     onNoteOpened,
@@ -244,7 +244,7 @@ const renderNote = (
     'published-note': isPublished,
   });
 
-  const decorators = [checkboxDecorator, makeFilterDecorator(filter)];
+  const decorators = [checkboxDecorator, makeFilterDecorator(searchQuery)];
 
   const selectNote = () => {
     onSelectNote(note.id);
@@ -288,12 +288,12 @@ const renderNote = (
  * @see renderNote
  *
  * @param {Object[]} notes list of filtered notes
- * @param {String} filter search filter
+ * @param {String} searchQuery search filter
  * @param {Number} tagResultsFound number of tag matches to display
  * @returns {Object[]} modified notes list
  */
-const createCompositeNoteList = (notes, filter, tagResultsFound) => {
-  if (filter.length === 0 || tagResultsFound === 0) {
+const createCompositeNoteList = (notes, searchQuery, tagResultsFound) => {
+  if (searchQuery.length === 0 || tagResultsFound === 0) {
     return notes;
   }
 
@@ -311,7 +311,6 @@ export class NoteList extends Component<Props> {
 
   static propTypes = {
     closeNote: PropTypes.func.isRequired,
-    filter: PropTypes.string.isRequired,
     tagResultsFound: PropTypes.number.isRequired,
     isSmallScreen: PropTypes.bool.isRequired,
     notes: PropTypes.array.isRequired,
@@ -339,16 +338,10 @@ export class NoteList extends Component<Props> {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      closeNote,
-      filter,
-      notes,
-      onSelectNote,
-      selectedNoteId,
-    } = this.props;
+    const { closeNote, searchQuery, notes, selectedNoteId } = this.props;
 
     if (
-      prevProps.filter !== this.props.filter ||
+      prevProps.searchQuery !== searchQuery ||
       prevProps.noteDisplay !== this.props.noteDisplay ||
       prevProps.notes !== notes ||
       prevProps.selectedNoteContent !== this.props.selectedNoteContent
@@ -357,7 +350,7 @@ export class NoteList extends Component<Props> {
     }
 
     // Deselect the currently selected note if it doesn't match the search query
-    if (filter !== prevProps.filter) {
+    if (searchQuery !== prevProps.searchQuery) {
       const selectedNotePassesFilter = notes.some(
         note => note.id === selectedNoteId
       );
@@ -406,7 +399,7 @@ export class NoteList extends Component<Props> {
 
   render() {
     const {
-      filter,
+      searchQuery,
       hasLoaded,
       selectedNoteId,
       onNoteOpened,
@@ -422,7 +415,7 @@ export class NoteList extends Component<Props> {
     const listItemsClasses = classNames('note-list-items', noteDisplay);
 
     const renderNoteRow = renderNote(notes, {
-      filter,
+      searchQuery,
       noteDisplay,
       onNoteOpened,
       onSelectNote,
@@ -467,7 +460,7 @@ export class NoteList extends Component<Props> {
                     notes={notes}
                     rowCount={notes.length}
                     rowHeight={getRowHeight(notes, {
-                      filter,
+                      searchQuery,
                       noteDisplay,
                       tagResultsFound,
                       width,
@@ -499,10 +492,10 @@ const { recordEvent } = tracks;
 
 const mapStateToProps: S.MapState<StateProps> = ({
   appState: state,
-  ui: { filteredNotes, note },
+  ui: { filteredNotes, note, searchQuery },
   settings: { noteDisplay },
 }) => {
-  const tagResultsFound = getMatchingTags(state.tags, state.filter).length;
+  const tagResultsFound = getMatchingTags(state.tags, searchQuery).length;
   const selectedNote = note;
   const selectedNoteId = selectedNote?.id;
   const selectedNoteIndex = filteredNotes.findIndex(
@@ -517,7 +510,7 @@ const mapStateToProps: S.MapState<StateProps> = ({
 
   const compositeNoteList = createCompositeNoteList(
     filteredNotes,
-    state.filter,
+    searchQuery,
     tagResultsFound
   );
 
@@ -545,12 +538,12 @@ const mapStateToProps: S.MapState<StateProps> = ({
     selectedNote && getNoteTitleAndPreview(selectedNote).preview;
 
   return {
-    filter: state.filter,
     hasLoaded: state.notes !== null,
     nextNote,
     noteDisplay,
     notes: compositeNoteList,
     prevNote,
+    searchQuery,
     selectedNotePreview,
     selectedNoteContent: get(selectedNote, 'data.content'),
     selectedNoteId,
