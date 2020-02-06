@@ -244,10 +244,11 @@ export class NoteDetail extends Component {
   }
 }
 
-const mapStateToProps = ({ appState: state, settings }) => ({
+const mapStateToProps = ({ appState: state, ui, settings }) => ({
+  detectLanguage: settings.languageDetectionEnabled,
   dialogs: state.dialogs,
   filter: state.filter,
-  detectLanguage: settings.languageDetectionEnabled,
+  note: state.revision || ui.note,
   shouldPrint: state.shouldPrint,
   showNoteInfo: state.showNoteInfo,
   spellCheckEnabled: settings.spellCheckEnabled,
