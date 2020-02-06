@@ -20,7 +20,7 @@ import classNames from 'classnames';
 import { debounce, get, isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import appState from '../flux/app-state';
-import { tracks } from '../analytics';
+import analytics from '../analytics';
 import getNoteTitleAndPreview from './get-note-title-and-preview';
 import {
   decorateWith,
@@ -495,7 +495,6 @@ const {
   loadAndSelectNote,
   pinNote,
 } = appState.actionCreators;
-const { recordEvent } = tracks;
 
 const mapStateToProps: S.MapState<StateProps> = ({
   appState: state,
@@ -565,7 +564,7 @@ const mapDispatchToProps = (dispatch, { noteBucket }) => ({
   onSelectNote: noteId => {
     if (noteId) {
       dispatch(loadAndSelectNote({ noteBucket, noteId }));
-      recordEvent('list_note_opened');
+      analytics.tracks.recordEvent('list_note_opened');
     }
   },
   onPinNote: (note, pin) => dispatch(pinNote({ noteBucket, note, pin })),

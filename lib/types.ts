@@ -68,3 +68,17 @@ export type ListDisplayMode = 'expanded' | 'comfy' | 'condensed';
 export type SortType = 'alphabetical' | 'creationDate' | 'modificationDate';
 export type Theme = 'system' | 'light' | 'dark';
 export type TranslatableString = string;
+
+///////////////////////////////////////
+// Language and Platform
+///////////////////////////////////////
+
+export type JSONValue =
+  | null
+  | boolean
+  | number
+  | string
+  | Array<JSONValue>
+  | { [key: string]: JSONValue };
+
+export type JSONSerializable = { [key: string]: JSONValue };

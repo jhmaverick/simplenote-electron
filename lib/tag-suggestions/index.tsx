@@ -2,13 +2,12 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import appState from '../flux/app-state';
-import { tracks } from '../analytics';
+import analytics from '../analytics';
 
 import { State } from '../state';
 import * as T from '../types';
 
 const { search, setSearchFocus } = appState.actionCreators;
-const { recordEvent } = tracks;
 
 export class TagSuggestions extends Component {
   static displayName = 'TagSuggestions';
@@ -140,7 +139,7 @@ const mapStateToProps = ({ appState: state }: State) => ({
 const mapDispatchToProps = dispatch => ({
   onSearch: filter => {
     dispatch(search({ filter }));
-    recordEvent('list_notes_searched');
+    analytics.tracks.recordEvent('list_notes_searched');
     dispatch(setSearchFocus({ searchFocus: true }));
   },
 });
