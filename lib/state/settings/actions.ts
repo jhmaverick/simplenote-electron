@@ -104,15 +104,6 @@ export const toggleAutoHideMenuBar = () => (dispatch, getState) => {
   });
 };
 
-export const setLanguageDetection = languageDetectionEnabled => ({
-  type: 'setLanguageDetection',
-  languageDetectionEnabled,
+export const toggleLanguageDetection: A.ActionCreator<A.ToggleLanguageDetection> = () => ({
+  type: 'toggleLanguageDetection',
 });
-
-export const toggleLanguageDetection = () => (dispatch, getState) => {
-  const {
-    settings: { languageDetectionEnabled },
-  } = getState();
-
-  dispatch(setLanguageDetection(!languageDetectionEnabled));
-};

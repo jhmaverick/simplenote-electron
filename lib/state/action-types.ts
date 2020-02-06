@@ -20,10 +20,6 @@ export type SetFocusMode = Action<
   { focusModeEnabled: boolean }
 >;
 export type SetFontSize = Action<'setFontSize', { fontSize?: number }>;
-export type SetLanguageDetection = Action<
-  'setLanguageDetection',
-  { languageDetectionEnabled: boolean }
->;
 export type SetLineLength = Action<
   'setLineLength',
   { lineLength: T.LineLength }
@@ -51,6 +47,7 @@ export type SetSpellCheck = Action<
 >;
 export type SetTheme = Action<'setTheme', { theme: T.Theme }>;
 export type SetWPToken = Action<'setWPToken', { token: string }>;
+export type ToggleLanguageDetection = Action<'toggleLanguageDetection'>;
 
 /*
  * Normal action types
@@ -77,7 +74,6 @@ export type ActionType =
   | SetAutoHideMenuBar
   | SetFocusMode
   | SetFontSize
-  | SetLanguageDetection
   | SetLineLength
   | SetMarkdownEnabled
   | SetNoteDisplay
@@ -88,6 +84,7 @@ export type ActionType =
   | SetTheme
   | SetUnsyncedNoteIds
   | SetWPToken
+  | ToggleLanguageDetection
   | ToggleSimperiumConnectionStatus
   | ToggleTagDrawer;
 

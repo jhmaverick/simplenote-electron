@@ -36,11 +36,6 @@ const reducer: A.Reducer<typeof initialState> = (
         ...state,
         fontSize: clamp(action.fontSize || initialState.fontSize, 10, 30),
       };
-    case 'setLanguageDetection':
-      return {
-        ...state,
-        languageDetectionEnabled: action.languageDetectionEnabled,
-      };
     case 'setLineLength':
       return { ...state, lineLength: action.lineLength };
     case 'setMarkdownEnabled':
@@ -59,6 +54,11 @@ const reducer: A.Reducer<typeof initialState> = (
       return { ...state, theme: action.theme };
     case 'setWPToken':
       return { ...state, wpToken: action.token };
+    case 'toggleLanguageDetection':
+      return {
+        ...state,
+        languageDetectionEnabled: !state.languageDetectionEnabled,
+      };
     default:
       return state;
   }
