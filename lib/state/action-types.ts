@@ -20,6 +20,10 @@ export type SetFocusMode = Action<
   { focusModeEnabled: boolean }
 >;
 export type SetFontSize = Action<'setFontSize', { fontSize?: number }>;
+export type SetLanguageDetection = Action<
+  'setLanguageDetection',
+  { languageDetectionEnabled: boolean }
+>;
 export type SetLineLength = Action<
   'setLineLength',
   { lineLength: T.LineLength }
@@ -69,6 +73,7 @@ export type ActionType =
   | SetAutoHideMenuBar
   | SetFocusMode
   | SetFontSize
+  | SetLanguageDetection
   | SetLineLength
   | SetMarkdownEnabled
   | SetNoteDisplay

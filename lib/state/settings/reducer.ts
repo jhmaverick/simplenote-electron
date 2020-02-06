@@ -37,7 +37,10 @@ const reducer: A.Reducer<typeof initialState> = (
         fontSize: clamp(action.fontSize || initialState.fontSize, 10, 30),
       };
     case 'setLanguageDetection':
-      return { ...state, languageDetectionEnabled: action.type };
+      return {
+        ...state,
+        languageDetectionEnabled: action.languageDetectionEnabled,
+      };
     case 'setLineLength':
       return { ...state, lineLength: action.lineLength };
     case 'setMarkdownEnabled':
