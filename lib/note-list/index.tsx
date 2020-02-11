@@ -338,7 +338,7 @@ export class NoteList extends Component<Props> {
   }
 
   componentDidUpdate(prevProps) {
-    const { closeNote, searchQuery, notes, selectedNoteId } = this.props;
+    const { searchQuery, notes } = this.props;
 
     if (
       prevProps.searchQuery !== searchQuery ||
@@ -347,16 +347,6 @@ export class NoteList extends Component<Props> {
       prevProps.selectedNoteContent !== this.props.selectedNoteContent
     ) {
       this.recomputeHeights();
-    }
-
-    // Deselect the currently selected note if it doesn't match the search query
-    if (searchQuery !== prevProps.searchQuery) {
-      const selectedNotePassesFilter = notes.some(
-        note => note.id === selectedNoteId
-      );
-      if (!selectedNotePassesFilter) {
-        closeNote();
-      }
     }
   }
 
